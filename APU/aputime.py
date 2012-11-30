@@ -43,7 +43,7 @@ class apu(object):
         request = urllib2.Request(self.baseurl + 'Intake1=' + self.intake + \
                 '&Submit=Submit&Week=' + self.week)
         request.add_header('User-Agent', \
-                'aputime.py/1.0 (+https://github.com/mavjs/apu-timetable)')
+                'aputime.py/1.0 (+https://github.com/mavjs/APUTimeTable)')
         opener = urllib2.build_opener()
         html = opener.open(request).read()
         parse_html = BeautifulSoup(html)
