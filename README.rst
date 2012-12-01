@@ -15,3 +15,6 @@ Requirements
 
 * [NOTE] The 'requirements.txt' file is included in the repository.
 
+License
+=======
+This program is free software. The ***LICENSE*** file is included in the repository.
