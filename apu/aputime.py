@@ -24,7 +24,8 @@ from BeautifulSoup import BeautifulSoup
 from icalendar import Calendar, Event
 from datetime import datetime
 
-class apu(object):
+
+class APU(object):
 
     def __init__(self, intake, week):
         self.baseurl = 'http://webapps.apiit.edu.my/schedule/intakeview_intake.jsp?'
@@ -49,7 +50,7 @@ class apu(object):
         parse_html = BeautifulSoup(html)
         final_html = parse_html.find('table', {'border': '1'})
         return final_html
-    
+
     def to_html(self):
         if not os.path.exists(self.storagedir):
             os.makedirs(self.storagedir)
@@ -88,18 +89,19 @@ class apu(object):
             lecturer = col[5].font.string
             record = (date, time, classroom, location, subject, lecturer)
             line = "|".join(record)
-            parts = line.split('|')                                                   #this is lot of unesswary work i know but i like it this way feel free to edit  
-            times = parts[1].split(' - ')                                             #trying to find the time
-            title = parts[4]                                                        
+            #this is lot of unesswary work i know but i like it this way feel free to edit
+            parts = line.split('|')
+            #trying to find the time
+            times = parts[1].split(' - ')
+            title = parts[4]
             where = parts[2] + "\t" + parts[3]
             content = parts[5]
-            begin_str = "%s %s:00" % (parts[0][4:].strip(""),times[0]) 
-            end_str = "%s %s:00" % (parts[0][4:].strip(""),times[1])
+            begin_str = "%s %s:00" % (parts[0][4:].strip(""), times[0])
+            end_str = "%s %s:00" % (parts[0][4:].strip(""), times[1])
             now = datetime.now()
             now_time = now.strftime('%Y%m%dT%H%M%SZ')
             begin_time = datetime.strptime(begin_str, '%d-%b-%y %H:%M:%S').strftime('%Y%m%dT%H%M%SZ')
             end_time = datetime.strptime(end_str, '%d-%b-%y %H:%M:%S').strftime('%Y%m%dT%H%M%SZ')
- 
             #start gathering info for VEVENT
             summary = title + " by " + content + " at " + where
             desc = title
