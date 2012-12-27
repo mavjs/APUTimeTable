@@ -1,6 +1,7 @@
 APU TimeTable Script
 ===================
-traces of insanity included.....enjoy at your own risk
+*traces of insanity included.....enjoy at your own risk*
+This script interacts with the `A.P.U <http://apu.edu.my>`_ timetables system and can generate .html and .ics files for each week of the Monday.
 
 Requirements
 ============
