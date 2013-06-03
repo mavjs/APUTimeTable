@@ -17,9 +17,9 @@
 
 import os
 import webbrowser
-import urllib2
 import pytz
 import hashlib
+import requests
 from BeautifulSoup import BeautifulSoup
 from icalendar import Calendar, Event
 from datetime import datetime
@@ -28,7 +28,7 @@ from datetime import datetime
 class APU(object):
 
     def __init__(self, intake, week):
-        self.baseurl = 'http://webapps.apiit.edu.my/schedule/intakeview_intake.jsp?'
+        self.baseurl = 'http://webspace.apiit.edu.my/intake-timetable/intake-result.php'
         self.storage = 'APUTimeTable'
         self.homedir = os.path.expanduser('~')
         self.intake = intake
@@ -41,14 +41,11 @@ class APU(object):
         self.kl = pytz.timezone('Asia/Kuala_Lumpur')
 
     def scrape(self):
-        request = urllib2.Request(self.baseurl + 'Intake1=' + self.intake + \
-                '&Submit=Submit&Week=' + self.week)
-        request.add_header('User-Agent', \
-                'aputime.py/1.0 (+https://github.com/mavjs/APUTimeTable)')
-        opener = urllib2.build_opener()
-        html = opener.open(request).read()
-        parse_html = BeautifulSoup(html)
-        final_html = parse_html.find('table', {'border': '1'})
+        payload = { 'week': self.week+'.xml', 'intake_Search_Week': self.intake, 'selectIntakeAll': self.intake }
+        headers = {'User-Agent': 'aputime.py/1.0 (+https://github.com/mavjs/APUTimeTable)'}
+        request = requests.post( self.baseurl, data=payload, headers=headers)
+        parse_html = BeautifulSoup(request.text)
+        final_html = parse_html.find('table', {'class': 'timetable-display'})
         return final_html
 
     def to_html(self):
