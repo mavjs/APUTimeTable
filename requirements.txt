@@ -1,4 +1,4 @@
 BeautifulSoup==3.2.1
 pytz==2012h
 icalendar==2.1
-requests==1.1.0
+requests>=2.20.0
